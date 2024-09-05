@@ -19,7 +19,7 @@ const spriteHeight = 523; //<- questo valore è il risultato della divisione tra
 
 let gameFrame = 0;
 //impostiamo un valore per l'accellerazione dei frames
-const stuggleFrame = 5;
+const stuggleFrame = 4;
 
 //creo una variabile che prenda come valore lo stato del personaggio: nome oggetto nell'arrai di oggetti animationStates
 let playerState = 'idle';
