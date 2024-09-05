@@ -23,6 +23,10 @@ const stuggleFrame = 5;
 
 //creo una variabile che prenda come valore lo stato del personaggio: nome oggetto nell'arrai di oggetti animationStates
 let playerState = 'idle';
+const dropdown = document.getElementById('animations');
+dropdown.addEventListener('change', function(event){
+  playerState = event.target.value;
+});
 
 /*===============ARRAY==============*/
 const spriteAnimations = [];
