@@ -1,3 +1,4 @@
+/*===============VARIABILI GLOBALI==============*/
 const canvas = document.getElementById('canvas1');
 //ctx=context
 const ctx = canvas.getContext('2d');
@@ -22,6 +23,48 @@ let frameY = 0;
 let gameFrame = 0;
 //impostiamo un valore per l'accellerazione dei frames
 const stuggleFrame = 5;
+
+/*===============ARRAY==============*/
+const spriteAnimations = [];
+
+//creiamo un array di oggetti che saranno popolati dal nome dello stato e dai frame
+const animationStates = [
+  {
+    name: 'idle',
+    frames: 7
+  },
+  {
+    name: 'jump',
+    frames: 7
+  },
+  {
+    name: 'fall',
+    frames: 7
+  },
+  {
+    name: 'run',
+    frames: 9
+  },
+  {
+    name: 'dizzy',
+    frames: 11
+  },
+];    
+
+/*=================FUNZIONI=================*/
+
+//usiamo il metodo foreach degli array 
+animationStates.forEach((state, index) => {
+  let frames = {
+    loc: [],
+  }
+  for(let j = 0; j < state.frames; j++){
+    let positionX = j * spriteWidth;
+    let positionY = index * spriteHeight;
+    frames.loc.push({x: positionX, y: positionY})
+  }
+  spriteAnimations[state.name] = frames;
+})
 
 //animiamo il nostro personaggio
 function animate(){
@@ -51,7 +94,7 @@ function animate(){
   10/5 = 2 -> Math.floor(2) = 2 => 2 % 6 = 2 ecc...
   */
 
-  let position = Math.floor(gameFrame / stuggleFrame) % 6;
+  let position = Math.floor(gameFrame / stuggleFrame) % spriteAnimations['idle'].loc.length;
   
   //reimpostiamo il valore di frameX
   frameX = spriteWidth * position;
