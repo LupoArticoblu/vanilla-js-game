@@ -17,12 +17,12 @@ const spriteWidth = 575; //<- questo valore è il risultato della divisione tra 
 
 const spriteHeight = 523; //<- questo valore è il risultato della divisione tra il height della nostra immagine campione e le righe
 
-let frameX = 0;
-let frameY = 0;
-
 let gameFrame = 0;
 //impostiamo un valore per l'accellerazione dei frames
 const stuggleFrame = 5;
+
+//creo una variabile che prenda come valore lo stato del personaggio: nome oggetto nell'arrai di oggetti animationStates
+let playerState = 'idle';
 
 /*===============ARRAY==============*/
 const spriteAnimations = [];
@@ -49,6 +49,26 @@ const animationStates = [
     name: 'dizzy',
     frames: 11
   },
+  {
+    name: 'sit',
+    frames: 5
+  },
+  {
+    name: 'roll',
+    frames: 7
+  },
+  {
+    name: 'bite',
+    frames: 7
+  },
+  {
+    name: 'ko',
+    frames: 12
+  },
+  {
+    name: 'gethit',
+    frames: 4
+  }
 ];    
 
 /*=================FUNZIONI=================*/
@@ -94,10 +114,12 @@ function animate(){
   10/5 = 2 -> Math.floor(2) = 2 => 2 % 6 = 2 ecc...
   */
 
-  let position = Math.floor(gameFrame / stuggleFrame) % spriteAnimations['idle'].loc.length;
+  let position = Math.floor(gameFrame / stuggleFrame) % spriteAnimations[playerState].loc.length;
   
   //reimpostiamo il valore di frameX
-  frameX = spriteWidth * position;
+  let frameX = spriteWidth * position;
+  let frameY = spriteAnimations[playerState].loc[position].y;
+
 
     //disegnamo il nostro personaggio
   
@@ -106,7 +128,7 @@ function animate(){
   //ctx.drawImage(image, sx, sy, sw, sh, dx, dy, dw, dh); prendiamo solo sx, sy, sw, sh saranno le dimensioni interessate, e le inseriamo dopo il valore playerImage di drawImage
   
   //sostituendo i valori di source x e y con delle ripetizioni di spriteWidth e spriteHeight, otteremo i frame della nostra immagine in movimento. Esempio frame 1(sx = 0 * spriteWidth), frame 2(sx = 1 * spriteWidth) e cosi via. mentre sy ci permetterà di spostarci da una posa ad un'altra, esempio stand 1(sy = 0 * spriteHeight), jump 1(sy = 1 * spriteHeight), land 1(sy = 2 * spriteHeight) ecc...   
-  ctx.drawImage(playerImage, frameX, frameY *  spriteHeight, spriteWidth, spriteHeight, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+  ctx.drawImage(playerImage, frameX, frameY, spriteWidth, spriteHeight, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
   //utilizziamo gameFrame ed usiamo il modulo per farlo ciclare
   if(gameFrame % stuggleFrame === 0) {
